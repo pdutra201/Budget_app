@@ -24,6 +24,7 @@ class Signup(Resource):
         user.password_hash=json['password']
         db.session.add(user)
         db.session.commit()
+        session["user_id"] = user.id
         return user.to_dict(), 201
 
 class CheckSession(Resource):
