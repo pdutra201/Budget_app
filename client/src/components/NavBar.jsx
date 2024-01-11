@@ -4,6 +4,7 @@ import '/home/pdutra/Development/code/phase-4/budget_app/client/node_modules/sta
 
 
 function NavBar({ user, setUser}) {
+
     function handleLogoutClick() {
         fetch("/logout", {method: "DELETE"})
         .then((resp) => {
@@ -23,10 +24,7 @@ function NavBar({ user, setUser}) {
                 </li>
                 <hr className="sidebar-divider"></hr>
                 
-                
-                
-                
-            
+
                 {user ? (
                 <button onClick= {handleLogoutClick}>logout</button>
                 ) : (

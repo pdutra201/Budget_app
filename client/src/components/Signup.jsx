@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { useNavigate } from "react-router-dom";
 
 
-function SignUp({ setUser }) {
+function SignUp({ isLoggedIn }) {
 
+  const navigate = useNavigate()
 
   const formSchema = Yup.object().shape({
     username: Yup.string().required("Username is required."),
@@ -40,12 +42,13 @@ function SignUp({ setUser }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(values),
-    }).then((r) => {
-      if (r.ok) {
-        r.json().then((user) => setUser(user));
+    }).then(r => r.json())
+    .then(data => {
+      isLoggedIn(data)
+      if(!data.error){
+        navigate('/')
       }
-    });
-
+    })
   }
 
 

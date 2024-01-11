@@ -1,5 +1,6 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
@@ -7,7 +8,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
+    username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
 
     @hybrid_property
