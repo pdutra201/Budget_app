@@ -6,10 +6,10 @@ import '/home/pdutra/Development/code/phase-4/budget_app/client/node_modules/sta
 function NavBar({ user, setUser}) {
 
     function handleLogoutClick() {
-        fetch("/logout", {method: "DELETE"})
+        fetch("/api/logout", {method: "DELETE"})
         .then((resp) => {
             if(resp.ok){
-                setUser(null);
+                setUser(null)
             }
         });
     }

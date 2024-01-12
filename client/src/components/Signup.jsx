@@ -12,7 +12,7 @@ function SignUp({ isLoggedIn }) {
     username: Yup.string().required("Username is required."),
     password: Yup.string().required("Password is required.")
     .min(8, "Password must be 8 characters long.")
-    .matches(/(?=.*[a-z])(?=.*[A-Z])\w+/, "Password ahould contain at least one uppercase and lowercase character")
+    .matches(/(?=.*[a-z])(?=.*[A-Z])\w+/, "Password should contain at least one uppercase and lowercase character")
       .matches(/\d/, "Password should contain at least one number"),
       passwordConfirmation: Yup.string().when("password", (password, field) => {
         if (password) {
@@ -54,10 +54,12 @@ function SignUp({ isLoggedIn }) {
 
 
   return (
+
     <main>
       <form onSubmit={formik.handleSubmit}>
         <h1 style={{color:'black'}}>Sign Up</h1>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Username</label><br>
+        </br>
         <input
           type="text"
           id="username"
@@ -67,7 +69,7 @@ function SignUp({ isLoggedIn }) {
         />
         <p style={{ color: 'red'}}>{formik.errors.username ? formik.errors.username : ""}</p>
         
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Password</label><br></br>
         <input
           type="password"
           id="password"
@@ -76,7 +78,7 @@ function SignUp({ isLoggedIn }) {
           autoComplete="current-password"
         />
         <p style={{ color: 'red'}} >{formik.errors.password ? formik.errors.password : ""}</p>
-        <label htmlFor="password">Password Confirmation</label>
+        <label htmlFor="password">Password Confirmation</label><br></br>
         <input
           type="password"
           id="passwordConfirmation"
@@ -85,7 +87,8 @@ function SignUp({ isLoggedIn }) {
           autoComplete="current-password"
         />
         <p style={{ color: 'red'}} >{formik.errors.passwordConfirmation ? formik.errors.passwordConfirmation: ""}</p>
-        <button type="submit">Sign Up</button>
+        <hr/>
+        <button style={{background: "blue", color:"white"}} type="submit">Sign Up</button>
       </form>
     </main>
   );
