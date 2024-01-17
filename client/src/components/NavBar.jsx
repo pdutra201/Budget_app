@@ -29,9 +29,9 @@ function NavBar({ user, setUser}) {
                 <button onClick= {handleLogoutClick}>logout</button>
                 ) : (
                     <div>                    
-                        <li className="nav-item"><Link className="nav-link" to="/signup">Signup</Link></li>
-                        <hr className="sidebar-divider"></hr>
                         <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                        <hr className="sidebar-divider"></hr>
+                        <li className="nav-item"><Link className="nav-link" to="/signup">Signup</Link></li>
                         </div>
                 )}
                 

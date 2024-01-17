@@ -16,8 +16,6 @@ class ClearSession(Resource):
         return {}, 204
 
 class Signup(Resource):
-    def get(self):
-        return "hi",200
     
     def post(self):
         json = request.get_json()
@@ -37,13 +35,24 @@ class CheckSession(Resource):
     def get(self):
         user_id = session['user_id']
         if(user_id):
-            user = User.query().filter_by(User.id == user_id).first()
+            user = User.query.filter(User.id == user_id).first()
             return user.to_dict(), 200
         else:
             return {} 
 
 class Login(Resource):
-    pass
+    def post(self):
+        json = request.get_json()
+        username= json['username']
+        password = json['password']
+
+        user = User.query.filter(User.username == username).first()
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return user.to_dict(), 201
+        else:
+            return {'error': 'Incorrect username or password.'}, 401
+
 
 class Logout(Resource):
     pass
@@ -51,7 +60,8 @@ class Logout(Resource):
 api.add_resource(ClearSession, '/clear', endpoint='clear')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/checksession', endpoint='checksession')
-
+api.add_resource(Logout, '/logout', endpoint="logout")
+api.add_resource(Login, '/login', endpoint="login")
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)

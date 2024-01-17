@@ -3,7 +3,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
 
-function Login(){
+function Login( {isLoggedIn}){
     
 const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ const navigate = useNavigate()
 
 
   function handleSubmit(values) {
-    fetch("/api/signup", {
+    fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +31,8 @@ const navigate = useNavigate()
       body: JSON.stringify(values),
     }).then(r => r.json())
     .then(data => {
-      isLoggedIn(data)
       if(!data.error){
+        isLoggedIn(data)
         navigate('/')
       }
     })
@@ -40,33 +40,34 @@ const navigate = useNavigate()
 
     return (
     
-        <main>
-      <form onSubmit={formik.handleSubmit}>
-        <h1 style={{color:'black'}}>Login</h1>
-        <label htmlFor="username"></label><br>
-        </br>
-        <input
-          type="text"
-          id="username"
-          autoComplete="off"
-          placeholder="Username"
-          value={ formik.values.username}
-          onChange={ formik.handleChange}
-        />
-        <br/>
-        <label htmlFor="password"></label><br></br>
-        <input
-          type="password"
-          id="password"
-          value={ formik.values.password}
-          placeholder="Password"
-          onChange={formik.handleChange}
-          autoComplete="current-password"
-        />
-        <hr/>
-        <button style={{background: "blue", color:"white"}} type="submit">Login</button>
-      </form>
-    </main>
+
+      <div>
+        <form onSubmit={formik.handleSubmit}>
+          <h1 style={{color:'black'}}>Login</h1>
+          <label htmlFor="username"></label><br>
+          </br>
+          <input
+            type="text"
+            id="username"
+            autoComplete="off"
+            placeholder="Username"
+            value={ formik.values.username}
+            onChange={ formik.handleChange}
+          />
+          <br/>
+          <label htmlFor="password"></label><br></br>
+          <input
+            type="password"
+            id="password"
+            value={ formik.values.password}
+            placeholder="Password"
+            onChange={formik.handleChange}
+            autoComplete="current-password"
+          />
+          <hr/>
+          <button style={{background: "blue", color:"white"}} type="submit">Login</button>
+        </form>
+    </div>
     
     )
 
