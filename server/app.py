@@ -4,7 +4,7 @@ from flask_restful import Resource
 from config import app, db, api
 from sqlalchemy.exc import IntegrityError
 
-from models import User
+from models.user import User
 
 class ClearSession(Resource):
 
@@ -55,7 +55,9 @@ class Login(Resource):
 
 
 class Logout(Resource):
-    pass
+    def delete(self):
+        session['user_id'] = None
+        return {"message": "logged out successfully"}, 200    
 
 api.add_resource(ClearSession, '/clear', endpoint='clear')
 api.add_resource(Signup, '/signup', endpoint='signup')

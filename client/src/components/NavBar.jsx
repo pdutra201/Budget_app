@@ -23,10 +23,15 @@ function NavBar({ user, setUser}) {
                     <Link to="/" className="nav-link">Home</Link>
                 </li>
                 <hr className="sidebar-divider"></hr>
-                
 
                 {user ? (
+                <div>
+                <li className="nav-item"><Link className="nav-link" to="/budget">Budget</Link></li>
+                <hr className="sidebar-divider"></hr>
+                <li className="nav-item"><Link className="nav-link" to="/transactions">Transactions</Link></li>
+                <hr className="sidebar-divider"></hr>
                 <button onClick= {handleLogoutClick}>logout</button>
+                </div>
                 ) : (
                     <div>                    
                         <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>

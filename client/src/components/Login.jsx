@@ -31,8 +31,8 @@ const navigate = useNavigate()
       body: JSON.stringify(values),
     }).then(r => r.json())
     .then(data => {
+      isLoggedIn(data)
       if(!data.error){
-        isLoggedIn(data)
         navigate('/')
       }
     })
