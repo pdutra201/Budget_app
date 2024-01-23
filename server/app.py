@@ -4,7 +4,7 @@ from flask_restful import Resource
 from config import app, db, api
 from sqlalchemy.exc import IntegrityError
 
-from models.user import User
+from models.models import *
 
 class ClearSession(Resource):
 
