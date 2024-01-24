@@ -12,4 +12,4 @@ class Transaction(db.Model, SerializerMixin):
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 def __repr__(self):
-    return f'Transaction: {self.name},  {self.amount}, {self.date}'
+    return f'Transaction: {self.description},  {self.amount}, {self.date}'
