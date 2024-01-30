@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
 
 
-function SignUp({ isLoggedIn }) {
+function SignUp({ isLoggedIn, clearError }) {
+
+  useEffect(() => {
+    clearError()
+  }, [])
 
   const navigate = useNavigate()
 
@@ -55,9 +59,10 @@ function SignUp({ isLoggedIn }) {
 
   return (
 
-    <main>
+    <main style={{margin:200}}>
       <form onSubmit={formik.handleSubmit}>
         <h1 style={{color:'black'}}>Sign Up</h1>
+        <br/>
         <label htmlFor="username">Username</label><br>
         </br>
         <input
@@ -89,7 +94,9 @@ function SignUp({ isLoggedIn }) {
         <p style={{ color: 'red'}} >{formik.errors.passwordConfirmation ? formik.errors.passwordConfirmation: ""}</p>
         <hr/>
         <button style={{background: "blue", color:"white"}} type="submit">Sign Up</button>
+        
       </form>
+      
     </main>
   );
 }

@@ -1,5 +1,5 @@
-import { useState  } from 'react'
-import {  BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import {  BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 //import '/App.css'
 import NavBar from './NavBar'
 import Home from './Home'
@@ -16,6 +16,11 @@ function App() {
   const [error, setError] = useState(null)
   
 
+  const clearError = () => {
+    setError(null)
+  }
+
+  
 
   const isLoggedIn = data => {
     
@@ -23,27 +28,31 @@ function App() {
       setError(data.error)
     }
     else{
-      
       setUser(data)
-
+      clearError()
     }
   }
+
+  //let location = useLocation()
+
+  // useEffect(() => {
+  //   clearError()
+  // }, [location])
+
+
   return (
     <body>
-
-        <Router class="container">
-        <NavBar user={user} />
-        <Errors error={error}/>
-          <Routes>
-            <Route path="/" element={<Home user={user}/>}/>
-            <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}/>}/>
-            <Route path="/login" element={<Login isLoggedIn={isLoggedIn}/>}/>
-          </Routes>
+    <Router class="container">
+      <NavBar user={user} />
+      <Errors error={error}/>
+      <Routes>
+        <Route path="/" element={<Home user={user} clearError={clearError}/>}/>
+        <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} clearError={clearError}/>}/>
+        <Route path="/login" element={<Login isLoggedIn={isLoggedIn} clearError={clearError}/>}/>
+      </Routes>
           
-        </Router>
+    </Router>  
     </body>
-       
-    
   )
 }
 
