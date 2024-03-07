@@ -1,12 +1,17 @@
 import React from "react";
+import "../App.css"
 
 const Errors = ({error}) => {
 
     return (
-        <div style={{color:'red'}}>
-            {error}
-        </div>
+        <>
+            {error && (
+                <div className="error-message">
+                <p>{error}</p>
+                </div>
+            )}
+        </>
     )
 }
 
-export default Errors
+export default Errors 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik"
-import * as Yup from "yup"
+//import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
 
 function Login( {isLoggedIn, clearError}){
-//clearError()
+
 
 useEffect(() => {
   clearError()
@@ -74,8 +74,7 @@ const navigate = useNavigate()
           <hr/>
           <button style={{background: "blue", color:"white"}} type="submit">Login</button>
         </form>
-        <hr/>
-        <button style={{background:'white',color:'blue', margin:-20}} type="submit">Forgot password?</button>
+        
     </div>
     
     )

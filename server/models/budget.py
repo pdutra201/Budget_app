@@ -7,6 +7,9 @@ class Budget(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     percentage = db.Column(db.Float)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    serialize_rules = ('-user.budgets')
     
 
 def __repr__(self):

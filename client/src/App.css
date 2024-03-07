@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .error-message {
+    color: #dc3545; /* Bootstrap's error color */
+    background-color: #f8d7da; /* Bootstrap's error background color */
+    border: 1px solid #f5c6cb; /* Bootstrap's error border color */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }

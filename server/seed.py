@@ -14,7 +14,7 @@ if __name__ == "__main__":
     newuser2.password_hash = 'testing12234'
 
 
-    newTransaction =  Transaction(amount= 24.99, description = "Food")
+    newTransaction =  Transaction(amount= 24.99, description = "Food", user_id = 1)
 
     db.session.add_all([newuser1, newuser2, newTransaction])
     db.session.commit()
