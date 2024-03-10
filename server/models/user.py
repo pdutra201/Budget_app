@@ -13,7 +13,7 @@ class User(db.Model, SerializerMixin):
     transactions = db.relationship('Transaction', backref='user')
     budgets = db.relationship('Budget', backref = 'user')
     
-    
+    serialize_rules = ('-transactions.user' ,)
 
     @hybrid_property
     def password_hash(self):

@@ -33,3 +33,16 @@ body {
     margin-bottom: 20px;
     border-radius: 5px;
   }
+
+  button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #eaeaea;
+  }

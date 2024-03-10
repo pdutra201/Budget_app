@@ -13,4 +13,4 @@ class Budget(db.Model, SerializerMixin):
     
 
 def __repr__(self):
-    return f''
+    return f'{self.percentage}'

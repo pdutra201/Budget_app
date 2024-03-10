@@ -12,7 +12,7 @@ class Transaction(db.Model, SerializerMixin):
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    serialize_rules = ('-user.transactions' ,)
+    serialize_rules = ( '-user',)
 
 def __repr__(self):
     return f'Transaction: {self.description},  {self.amount}, {self.date}'
