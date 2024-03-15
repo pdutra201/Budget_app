@@ -3,7 +3,7 @@ import { useFormik } from "formik"
 //import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
 
-function Login( {isLoggedIn, clearError}){
+function Login( {isLoggedIn, clearError, getTransactions}){
 
 
 useEffect(() => {
@@ -39,6 +39,7 @@ const navigate = useNavigate()
     .then(data => {
       isLoggedIn(data)
       if(!data.error){
+        getTransactions()
         navigate('/')
       }
     })
