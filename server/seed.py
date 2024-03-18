@@ -17,5 +17,7 @@ if __name__ == "__main__":
     newTransaction =  Transaction(amount= 24.99, description = "Food", user_id = 1)
     newTransaction2 =  Transaction(amount= 10.99, description = "Gas", user_id = 1)
 
+    newBudget = Budget(percentage = .50, user_id = 1)
+
     db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2])
     db.session.commit()

@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from config import db
+from sqlalchemy.ext.associationproxy import association_proxy
 
 class Budget(db.Model, SerializerMixin):
     __tablename__ = "budgets"
@@ -9,7 +10,12 @@ class Budget(db.Model, SerializerMixin):
     percentage = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    serialize_rules = ('-user.budgets')
+    categories = db.relationship('Category', back_populates='budget')
+
+    transactions = association_proxy('categories', 'transaction')
+    
+
+    serialize_rules = ('-categories.budget' , '-transactions.budgets',)
     
 
 def __repr__(self):

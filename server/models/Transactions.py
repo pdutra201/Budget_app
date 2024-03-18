@@ -1,5 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
+from sqlalchemy.ext.associationproxy import association_proxy
+
 
 from config import db
 
@@ -11,8 +13,13 @@ class Transaction(db.Model, SerializerMixin):
     description = db.Column(db.String(200) )
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
 
-    serialize_rules = ( '-user',)
+    categories = db.relationship('Category', back_populates='transaction')
+    
+    budgets = association_proxy('categories', 'budget')
+
+    serialize_rules = ( '-budgets.transactions',)
 
 def __repr__(self):
     return f'Transaction: {self.description},  {self.amount}, {self.date}'
