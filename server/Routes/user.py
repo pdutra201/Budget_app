@@ -59,3 +59,19 @@ class Logout(Resource):
     def delete(self):
         session['user_id'] = None
         return {"message": "logged out successfully"}, 200    
+    
+
+class EditUser(Resource):
+    def patch(self, user_id):
+            data = request.get_json()
+            column = "income"
+            new_value = data.get(column)
+
+            user = User.query.filter(User.id == user_id).first()
+            if (user):
+                
+                setattr(user, column, new_value)
+                db.session.commit()
+
+                print(user)
+                return user.to_dict(), 200
