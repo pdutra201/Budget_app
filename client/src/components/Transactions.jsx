@@ -102,7 +102,7 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
                 </div>
             ) : (
                 <div>
-                    <h3>Please log in</h3>
+                    <h3>Please login to continue</h3>
                 </div>
             )}
             
