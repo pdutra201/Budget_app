@@ -19,7 +19,7 @@ class Transaction(db.Model, SerializerMixin):
     
     budgets = association_proxy('categories', 'budget')
 
-    serialize_rules = ( '-budgets.transactions',)
+    serialize_rules = ( '-budgets.transactions', '-user.transactions', '-user._password_hash')
 
 def __repr__(self):
     return f'Transaction: {self.description},  {self.amount}, {self.date}'

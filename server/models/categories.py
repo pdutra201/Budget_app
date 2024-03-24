@@ -10,6 +10,7 @@ class Category(db.Model, SerializerMixin):
     transaction_id = db.Column(db.Integer, db.ForeignKey('transactions.id'))
 
     transaction = db.relationship('Transaction', back_populates='categories')
+    
     budget = db.relationship('Budget', back_populates='categories')
     
     serialize_rules = ('budget.categories',)

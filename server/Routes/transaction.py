@@ -38,7 +38,7 @@ class Transactions(Resource):
         
         dateObj = datetime.strptime(data['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
         
-        print('hi')
+        
         try:
             newTrans = Transaction(
                 amount = float(data['amount']),
@@ -50,6 +50,7 @@ class Transactions(Resource):
             db.session.add(newTrans)
             db.session.commit()
             return newTrans.to_dict(), 201
+        
         except ImportError:
             return {}
         

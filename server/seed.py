@@ -12,12 +12,13 @@ if __name__ == "__main__":
     newuser1.password_hash = '12345'
     newuser2 = User(username="test2")
     newuser2.password_hash = 'testing12234'
+    
 
 
     newTransaction =  Transaction(amount= 24.99, description = "Food", user_id = 1)
     newTransaction2 =  Transaction(amount= 10.99, description = "Gas", user_id = 1)
 
-    newBudget = Budget(percentage = .50, user_id = 1)
+    newBudget = Budget(percentage = 50, user_id = 1)
 
-    db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2])
+    db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2, newBudget])
     db.session.commit()

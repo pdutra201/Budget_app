@@ -13,6 +13,7 @@ api.add_resource(Logout, '/logout', endpoint="logout")
 api.add_resource(Login, '/login', endpoint="login")
 api.add_resource(Transactions, '/transactions', '/transactions/<int:trans_id>')
 api.add_resource(EditUser, '/home', '/home/<int:user_id>')
+api.add_resource(Budgets, '/budget', endpoint="budget")
 
 
 if __name__ == "__main__":

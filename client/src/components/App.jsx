@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import Home from './Home'
 import SignUp from './Signup';
 import Transactions from './Transactions';
-import Budget from './Budget'
+import BudgetList from './BudgetList'
 import Errors from './Errors';
 import Login from './Login';
 
@@ -36,7 +36,16 @@ function App() {
 }
 
   const getBudgets = () => {
-
+    fetch("/api/budget")
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error('Failed to fetch transactions')
+        }
+        return resp.json()
+      })
+      .then(data => {
+        setBudgets(data)
+    })
   }
 
   const isLoggedIn = data => {
@@ -65,7 +74,7 @@ function App() {
                 <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} clearError={clearError}/>}/>
                 <Route path="/login" element={<Login getTransactions={getTransactions} isLoggedIn={isLoggedIn} clearError={clearError}/>}/>
                 <Route path="/transactions" element={<Transactions trans={trans} setTrans={setTrans} getTransactions={getTransactions} isLoggedIn={isLoggedIn} user={user}/>}/>
-                <Route path="/budget" element={<Budget trans={trans} budgets={budgets} user={user}/>}/>
+                <Route path="/budget" element={<BudgetList getBudgets={getBudgets} trans={trans} budgets={budgets} user={user}/>}/>
               </Routes>
             </div>
           </div>

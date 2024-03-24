@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useFormik} from "formik";
+import '../App.css'
 
 
 function Home({ user, clearError, setUser, trans }) {
@@ -41,7 +42,7 @@ function Home({ user, clearError, setUser, trans }) {
         const recentList = trans.slice(-3)
         
         return (
-            <div >
+            <div className="container">
                 <h1>Welcome, {user.username}!</h1>
                 <>
                 <h5>Monthly Income</h5>
