@@ -6,6 +6,8 @@ if __name__ == "__main__":
     
     User.query.delete()
     Transaction.query.delete()
+    Category.query.delete()
+    Budget.query.delete()
 
 
     newuser1 = User(username="testing")
@@ -18,7 +20,7 @@ if __name__ == "__main__":
     newTransaction =  Transaction(amount= 24.99, description = "Food", user_id = 1)
     newTransaction2 =  Transaction(amount= 10.99, description = "Gas", user_id = 1)
 
-    newBudget = Budget(percentage = 50, user_id = 1)
+    
 
-    db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2, newBudget])
+    db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2])
     db.session.commit()

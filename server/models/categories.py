@@ -13,7 +13,7 @@ class Category(db.Model, SerializerMixin):
     
     budget = db.relationship('Budget', back_populates='categories')
     
-    serialize_rules = ('budget.categories',)
+    serialize_rules = ('-budget.categories',)
 
 
     def __repr__(self):
