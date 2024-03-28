@@ -20,6 +20,7 @@ class Budgets(Resource):
             return {"error": "not authorized"}
     
     def post(self):
+        user_id = session['user_id']
         data = request.get_json()
 
         user_id = session['user_id']
@@ -29,17 +30,17 @@ class Budgets(Resource):
 
         print(category)
         
-        
-        try:
-            newBudget = Budget( percentage=percentage, user_id = user_id)
-            db.session.add(newBudget)
-            db.session.commit()
-            
-            newCategory = Category(name=category, budget_id = newBudget.id)
+        if(user_id):
+            try:
+                newBudget = Budget( percentage=percentage, user_id = user_id)
+                db.session.add(newBudget)
+                db.session.commit()
+                
+                newCategory = Category(name=category, budget_id = newBudget.id, user_id=user_id)
 
-            db.session.add(newCategory)
-            db.session.commit()
+                db.session.add(newCategory)
+                db.session.commit()
 
-            return {}
-        except ImportError:
-            return {'error': 'unable to access database'}
+                return {}
+            except ImportError:
+                return {'error': 'unable to access database'}

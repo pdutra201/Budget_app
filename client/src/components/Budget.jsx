@@ -4,7 +4,7 @@ import { useFormik } from 'formik'
 function Budget({budget, totalIncome}){
     const [allowance, setAllowance] = useState((budget.percentage/100)*totalIncome)
     const cats = budget.categories.map((cat) => {
-        return <li>{cat.name}</li>
+        return <li key={cat.id}>{cat.name}</li>
     })
     return (
         <div>

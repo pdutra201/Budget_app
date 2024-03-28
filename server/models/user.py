@@ -15,8 +15,12 @@ class User(db.Model, SerializerMixin):
     
     transactions = db.relationship('Transaction', backref='user')
     budgets = db.relationship('Budget', backref = 'user')
+    categories = db.relationship('Category', backref = 'user')
+
     
-    serialize_rules = ('-transactions.user', '-budgets.user',)
+    serialize_rules = ('-transactions.user', '-budgets.user', '-categories.user', 
+                       '-categories.budget', '-categories.transaction', '-budgets.categories', 
+                       '-transactions.categories',)
 
     @hybrid_property
     def password_hash(self):

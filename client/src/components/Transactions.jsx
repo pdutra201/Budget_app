@@ -18,7 +18,7 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
     }, [user]);
 
     const handleAddTransaction = (values) => {
-        console.log(values)
+        
         fetch("/api/transactions", {
             method: 'POST',
             headers: {
@@ -28,10 +28,32 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
         })
             .then(resp => {
                 if (resp.ok) {
-                    getTransactions();
+                    return resp.json()
                 }
             })
+            .then(data => {
+                
+                const categoryRequests = values.categories.map(category => {
+                    (console.log(category))
+                    return fetch(`/api/categories/${category}`, {
+                        method: 'PATCH',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            'trans_id': data.id
+                        })
+                    })
+                    .then(resp => {
+                        if (resp.ok) {
+                            return resp.json()
+                        }
+                    });
+                });
+        
+                return Promise.all(categoryRequests);
+            })
+            .then(() => {getTransactions()})
     };
+ 
 
     const handleDelete = (trans_id) => {
         fetch(`/api/transactions/${trans_id}`, {
@@ -91,6 +113,11 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
                                         <strong>Description:</strong> {transaction.description}<br/>
                                         <strong>Price:</strong> {transaction.amount}<br/>
                                         <strong>Date:</strong> {transaction.date}<br/>
+                                        <ul>Categories:
+                                            {transaction.categories.map( cat => {
+                                                return <li style={{marginLeft:"10px"}} key={cat.id}>{cat.name}</li>
+                                            })} 
+                                        </ul>                            
                                         <button style={{background:'orange', color:'white'}} onClick={() => handleEdit(transaction.id)}>Edit</button>
                                         <button style={{background: 'Red', color: 'white'}} onClick={() => handleDelete(transaction.id)}>Delete</button>
                                     </>

@@ -49,6 +49,7 @@ class Transactions(Resource):
             )
             db.session.add(newTrans)
             db.session.commit()
+            print(newTrans.to_dict())
             return newTrans.to_dict(), 201
         
         except ImportError:
