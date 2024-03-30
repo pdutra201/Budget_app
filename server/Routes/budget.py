@@ -3,19 +3,32 @@ from flask_restful import Resource
 from config import db
 from sqlalchemy.exc import IntegrityError
 
+
 from models.models import *
 
 class Budgets(Resource):
-    def get(self):
+    def get(self, budget_id = None):
         user_id = session['user_id']
         if(user_id):
-            budgets = Budget.query.filter(Budget.user_id == user_id).all()
-            budget_data = []
-            for budget in budgets:
-                budget_data.append(budget.to_dict())
-                
-            return budget_data, 200
-        
+            if budget_id is None:
+                budgets = Budget.query.filter(Budget.user_id == user_id).all()
+                budget_data = []
+            
+                for budget in budgets:
+                    budget_data.append(budget.to_dict())
+                    
+                return budget_data, 200
+
+            else:
+                # Return transactions for a specific budget
+                budget = Budget.query.filter_by(id=budget_id, user_id=user_id).first()
+                if budget:
+                    transactions = [transaction.to_dict() for transaction in budget.transactions[0]]
+                    
+                    return transactions, 200
+                else:
+                    return {"error": "Budget not found"}, 404
+
         else:
             return {"error": "not authorized"}
     
@@ -44,3 +57,5 @@ class Budgets(Resource):
                 return {}
             except ImportError:
                 return {'error': 'unable to access database'}
+    
+   

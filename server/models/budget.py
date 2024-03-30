@@ -13,12 +13,12 @@ class Budget(db.Model, SerializerMixin):
 
     categories = db.relationship('Category', back_populates='budget')
 
-    transactions = association_proxy('categories', 'transaction')
+    transactions = association_proxy('categories', 'transactions')
     
 
     serialize_rules = ('-categories.budget', '-transactions.budgets', '-user._password_hash',
-                       '-user.budgets', '-categories.user_id',)
+                       '-user.budgets', '-categories.user_id', )
     
 
-def __repr__(self):
-    return f'{self.percentage}'
+    def __repr__(self):
+        return f'{self.percentage}'
