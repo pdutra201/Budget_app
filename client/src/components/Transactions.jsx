@@ -5,18 +5,21 @@ import EditableTransaction from "./EditableTransaction";
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css'
 
-function Transactions({ user, getTransactions, trans, setTrans }) {
+function Transactions({ user, getTransactions, trans }) {
     
+    //set state to edit or not
     const [editId, setEditId] = useState(null);
 
     
-
+    //request transactions on page load and when user changes
     useEffect(() => {
         if (user) {
             getTransactions();
         }
     }, [user]);
 
+
+    //send POST request to add new transaction then a PATCH request to assign the transaction to a category
     const handleAddTransaction = (values) => {
         
         fetch("/api/transactions", {
@@ -55,6 +58,7 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
     };
  
 
+    //send DELETE request to delete transaction
     const handleDelete = (trans_id) => {
         fetch(`/api/transactions/${trans_id}`, {
             method: 'DELETE'
@@ -66,10 +70,13 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
             })
     }
 
+    //toggles if transaction is editable or not
     const handleEdit = (transaction_id) => {
         setEditId(transaction_id);
     }
 
+
+    //send PUT request to update transaction values after update
     const handleUpdate = (values) => {
         
         fetch(`/api/transactions/${editId}`, {
@@ -87,6 +94,7 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
             })
     }
 
+    //make transaction no longer editable without making changes
     const handleCancelEdit = () => {
         setEditId(null);
     }
@@ -123,7 +131,9 @@ function Transactions({ user, getTransactions, trans, setTrans }) {
                                     </>
                                 )}
                                 <br/>
+                                <div style={{ borderBottom: '2px solid #000', marginBottom: '20px' }}></div>
                             </li>
+                            
                         ))}
                     </ul>
                 </div>

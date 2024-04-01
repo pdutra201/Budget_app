@@ -5,6 +5,7 @@ import '/home/pdutra/Development/code/phase-4/budget_app/client/node_modules/sta
 
 function NavBar({ user, setUser}) {
 
+    // send DELETE request to db to log out user
     function handleLogoutClick() {
         fetch("/api/logout", {method: "DELETE"})
         .then((resp) => {

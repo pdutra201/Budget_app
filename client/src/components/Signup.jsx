@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 function SignUp({ isLoggedIn, clearError }) {
 
+// clear error message 
   useEffect(() => {
     clearError()
   }, [])
 
   const navigate = useNavigate()
 
+  //schema to determine validations
   const formSchema = Yup.object().shape({
     username: Yup.string().required("Username is required."),
     password: Yup.string().required("Password is required.")
@@ -25,6 +27,8 @@ function SignUp({ isLoggedIn, clearError }) {
     })
   })
 
+
+  //set form values and send POST request to add new user
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -32,28 +36,25 @@ function SignUp({ isLoggedIn, clearError }) {
       passwordConfirmation: ""
     },
     validationSchema: formSchema,
-    onSubmit: handleSubmit
+    onSubmit: (values) => {
+      fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then(r => r.json())
+      .then(data => {
+        isLoggedIn(data)
+        if(!data.error){
+          navigate('/')
+        }
+      })
+    }
 
   })
 
 
-
-
-  function handleSubmit(values) {
-    fetch("/api/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then(r => r.json())
-    .then(data => {
-      isLoggedIn(data)
-      if(!data.error){
-        navigate('/')
-      }
-    })
-  }
 
 
 

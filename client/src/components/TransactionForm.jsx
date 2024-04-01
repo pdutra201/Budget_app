@@ -4,14 +4,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function TransactionForm({ onSubmit }) {
+
+    //state to hold values of categories
     const [cats, setCats] = useState([])
 
+    //send get request for categories when page loads and save in state
     useEffect(()=>{
         fetch('/api/categories')
             .then(resp => resp.json())
             .then(data => setCats(data))
     }, [])
 
+    //set form values and 
     const formik = useFormik({
         initialValues: {
             amount: "",
@@ -26,6 +30,7 @@ function TransactionForm({ onSubmit }) {
     });
 
 
+    //when input field changes save new value before sending to formik
     const handleCategoryChange = (e) => {
         const { value, checked } = e.target;
         const newCategories = checked
@@ -71,7 +76,7 @@ function TransactionForm({ onSubmit }) {
                     />
                 </div>
                 <br/>
-                <div >
+                <div style={{margin: '10px'}} >
                     <label>Categories </label>
                     <br/>
                     <div style={{ maxHeight: '100px', overflowY: 'auto' }}>

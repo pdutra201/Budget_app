@@ -4,8 +4,9 @@ import '../App.css'
 
 
 
-function BudgetForm({ onFormSubmit, getBudgets }){
+function BudgetForm({ onFormSubmit }){
 
+    // define formik Form values
     const formik = useFormik({
         initialValues: {
             percentage: 100,
@@ -17,6 +18,7 @@ function BudgetForm({ onFormSubmit, getBudgets }){
         }
     })
 
+    
     return(
             <form onSubmit={formik.handleSubmit}>
                 <h4>Add New Budget</h4><br/>

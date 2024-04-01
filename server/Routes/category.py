@@ -8,7 +8,7 @@ class Categories(Resource):
     def get(self):
         user_id = session['user_id']
         if(user_id):
-            categories = Category.query.all()
+            categories = Category.query.filter(Category.user_id == user_id).all()
             category_data = []
             for category in categories:
                 category_data.append(category.to_dict())

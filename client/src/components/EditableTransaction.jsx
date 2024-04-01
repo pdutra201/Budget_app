@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function EditableTransaction({ transaction, onUpdate, onCancel }) {
+
+    // state to save new transaction values | on submit sends data to PUT request to make changes in db
     const [values, setValues] = useState({
         amount: transaction.amount,
         description: transaction.description,

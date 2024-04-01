@@ -4,13 +4,18 @@ import '../App.css'
 
 
 function Home({ user, clearError, setUser, trans }) {
+
+    //state to determine if Salary is editable
     const [canEdit, setCanEdit] = useState(false)
 
+
+    //clears error messages on log in 
     useEffect(() => {
         clearError()
       }, [])
 
     
+    //set form values and update income in user table
     const formik = useFormik({
         initialValues:{
             income: 0.00
@@ -31,6 +36,7 @@ function Home({ user, clearError, setUser, trans }) {
         }
     })
 
+    
     const handelEdit = () => {
         setCanEdit(true)
     }
@@ -65,7 +71,7 @@ function Home({ user, clearError, setUser, trans }) {
                 ):(
                      
                     <div>
-                        <strong>{user.income}</strong>
+                        <strong>${user.income} </strong>
                         <button onClick={() => handelEdit()}>Edit</button>
                     </div>
                     

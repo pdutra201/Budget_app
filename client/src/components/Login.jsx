@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik"
-//import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
 
 function Login( {isLoggedIn, clearError, getTransactions}){
 
-
+//clear error messages 
 useEffect(() => {
   clearError()
 }, [])
@@ -14,6 +13,7 @@ useEffect(() => {
 const navigate = useNavigate()
 
 
+//set form values and make POST request when submit is clicked
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -21,29 +21,25 @@ const navigate = useNavigate()
       
     },
     
-    onSubmit: handleSubmit
-
+    onSubmit: (values) => {
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then(r => r.json())
+      .then(data => {
+        isLoggedIn(data)
+        if(!data.error){
+          getTransactions()
+          navigate('/')
+        }
+      })
+    }
+      
   })
 
-
-
-
-  function handleSubmit(values) {
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then(r => r.json())
-    .then(data => {
-      isLoggedIn(data)
-      if(!data.error){
-        getTransactions()
-        navigate('/')
-      }
-    })
-  }
 
     return (
     
