@@ -4,7 +4,7 @@ Budget Application
 
 Features
   User Authentication: Users can sign up, log in, and log out.
-  Budget Management: Users can create, view, update, and delete budgets.
+  Budget Management: Users can create and view budgets.
   Transaction Tracking: Users can add, view, update, and delete transactions within their budgets.
   Allowance Setting: Users can set and update spending allowances for different categories.
  
