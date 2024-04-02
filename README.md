@@ -12,7 +12,7 @@ Features
  Technologies Used
   Frontend: React, Formik (for forms)
   Backend: Flask, Flask-SQLAlchemy (for database management), Flask-Migrate (for database migrations)
-  Database: SQLite (for development), PostgreSQL (for production)
+  Database: SQLite (for development)
 
 
 Contributing
