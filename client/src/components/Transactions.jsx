@@ -111,11 +111,16 @@ function Transactions({ user, getTransactions, trans }) {
                         {trans.map((transaction) => (
                             <li key={transaction.id}>
                                 {editId == transaction.id ? (
-                                    <EditableTransaction
+                                    <div>
+                                        <TransactionForm
                                         transaction={transaction}
-                                        onUpdate={handleUpdate}
-                                        onCancel={handleCancelEdit}
+                                        onSubmit={handleUpdate}
+                                        
+
                                     />
+                                    <button style={{background: 'Red', color: 'white'}} onClick={handleCancelEdit}>Cancel</button>
+                                    </div>
+                                    
                                 ) : (
                                     <>
                                         <strong>Description:</strong> {transaction.description}<br/>

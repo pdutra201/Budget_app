@@ -20,10 +20,11 @@ class Categories(Resource):
         user_id = session['user_id']
         data = request.get_json()
         trans_id = data['trans_id']
-        print(data)
+        # print(data)
         
         cat = Category.query.filter(Category.name == cat_name, Category.user_id == user_id).first()
         trans = Transaction.query.filter(Transaction.id == trans_id, Transaction.user_id == user_id).first()
+        breakpoint()
         if(cat):
             cat.transactions.append(trans)
             db.session.commit()

@@ -35,6 +35,7 @@ class Transactions(Resource):
 
     def post(self):
         data = request.get_json()
+        print(data)
         
         dateObj = datetime.strptime(data['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
         
