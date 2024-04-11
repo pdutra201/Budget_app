@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
 import TransactionForm from "./TransactionForm";
-import EditableTransaction from "./EditableTransaction";
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css'
 
@@ -78,7 +77,7 @@ function Transactions({ user, getTransactions, trans }) {
 
     //send PUT request to update transaction values after update
     const handleUpdate = (values) => {
-        
+        console.log(values)
         fetch(`/api/transactions/${editId}`, {
             method: 'PUT',
             headers: {

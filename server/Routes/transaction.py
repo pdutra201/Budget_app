@@ -59,12 +59,29 @@ class Transactions(Resource):
     def put(self, trans_id):
         user_id = session['user_id']
         data = request.get_json()
+        
         transaction = Transaction.query.filter(Transaction.id == trans_id, Transaction.user_id == user_id ).first()
+        
         if(transaction):
             transaction.amount = data['amount']
             transaction.description = data['description']
             transaction.date = datetime.strptime(data['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
-            
+
+            for category_name in data['categories']:
+                
+                category = Category.query.filter(Category.name == category_name).first()
+                
+                if category:
+                    if category not in transaction.categories:
+                        transaction.categories.append(category)
+                else: 
+                    return {"error": "Category not found"}, 404
+
+            for category in transaction.categories:
+                if category.name not in data['categories']:
+                    transaction.categories.remove(category) 
+
+
             db.session.commit()
             
             return {'message': 'Transaction updated successfully'}, 200

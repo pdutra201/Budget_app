@@ -24,7 +24,7 @@ class Categories(Resource):
         
         cat = Category.query.filter(Category.name == cat_name, Category.user_id == user_id).first()
         trans = Transaction.query.filter(Transaction.id == trans_id, Transaction.user_id == user_id).first()
-        breakpoint()
+        # breakpoint()
         if(cat):
             cat.transactions.append(trans)
             db.session.commit()
