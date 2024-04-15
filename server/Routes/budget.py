@@ -11,7 +11,7 @@ class Budgets(Resource):
         user_id = session['user_id']
         if(user_id):
             if budget_id is None:
-                budgets = Budget.query.filter(Budget.user_id == user_id).all()
+                budgets = Budget.query.join(Category).filter(Category.user_id == user_id).all()
                 budget_data = []
             
                 for budget in budgets:
@@ -21,7 +21,7 @@ class Budgets(Resource):
 
             else:
                 # Return transactions for a specific budget
-                budget = Budget.query.filter_by(id=budget_id, user_id=user_id).first()
+                budget = Budget.query.filter_by(id=budget_id).first()
                 if budget:
                     transactions = [transaction.to_dict() for transaction in budget.transactions[0]]
                     
@@ -45,7 +45,7 @@ class Budgets(Resource):
         
         if(user_id):
             try:
-                newBudget = Budget( percentage=percentage, user_id = user_id)
+                newBudget = Budget( percentage=percentage)
                 db.session.add(newBudget)
                 db.session.commit()
                 

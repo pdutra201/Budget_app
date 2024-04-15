@@ -11,11 +11,13 @@ class Category(db.Model, SerializerMixin):
     
 
     transactions = db.relationship('Transaction', secondary='category_transaction_association', back_populates='categories')
+
+    user = db.relationship('User', back_populates='categories')
     
     budget = db.relationship('Budget', back_populates='categories')
     
     serialize_rules = ('-budget.categories', '-user.categories', '-transactions.categories', 
-                       '-transactions.user_id',)
+                       '-transactions.user_id', )
 
 
     def __repr__(self):

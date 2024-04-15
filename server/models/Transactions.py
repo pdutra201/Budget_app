@@ -17,12 +17,12 @@ class Transaction(db.Model, SerializerMixin):
 
     categories = db.relationship('Category', secondary='category_transaction_association', back_populates='transactions')
     
-    budgets = association_proxy('categories', 'budget')
+    
 
-    serialize_rules = ( '-budgets.transactions', '-user.transactions', 
+    serialize_rules = ( '-user.transactions', 
                        '-user._password_hash', '-user.categories',
                        '-categories.transactions', '-categories.budget',
-                       '-categories.user_id')
+                       '-categories.user_id', ) 
 
 def __repr__(self):
     return f'Transaction: {self.description},  {self.amount}, {self.date}'

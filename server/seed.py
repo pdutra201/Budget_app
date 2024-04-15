@@ -1,5 +1,6 @@
 from config import app, db
 from models.models import *
+from sqlalchemy_serializer import Serializer
 
 if __name__ == "__main__":
   with app.app_context():
@@ -24,3 +25,5 @@ if __name__ == "__main__":
 
     db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2])
     db.session.commit()
+
+    

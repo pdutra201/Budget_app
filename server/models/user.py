@@ -1,5 +1,6 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.ext.associationproxy import association_proxy
 
 
 from config import db, bcrypt
@@ -14,13 +15,15 @@ class User(db.Model, SerializerMixin):
     
     
     transactions = db.relationship('Transaction', backref='user')
-    budgets = db.relationship('Budget', backref = 'user')
-    categories = db.relationship('Category', backref = 'user')
+    
+    categories = db.relationship('Category', back_populates = 'user')
 
+    budgets = association_proxy('categories', 'budget')
     
     serialize_rules = ('-transactions.user', '-budgets.user', '-categories.user', 
                        '-categories.budget', '-categories.transaction', '-budgets.categories', 
-                       '-transactions.categories',)
+                       '-transactions.categories', '-categories.budget.user', '-budgets.transactions'
+                       ,)
 
     @hybrid_property
     def password_hash(self):
