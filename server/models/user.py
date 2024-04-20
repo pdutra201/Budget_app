@@ -13,12 +13,10 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
     income = db.Column(db.Float, default = 0.00)
     
-    
-    transactions = db.relationship('Transaction', backref='user')
-    
-    categories = db.relationship('Category', back_populates = 'user')
 
-    budgets = association_proxy('categories', 'budget')
+    budgets = db.relationship('Budget', back_populates = 'user')
+
+    categories = association_proxy('budgets', 'category')
     
     serialize_rules = ('-transactions.user', '-budgets.user', '-categories.user', 
                        '-categories.budget', '-categories.transaction', '-budgets.categories', 

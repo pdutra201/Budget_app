@@ -12,10 +12,10 @@ class Transaction(db.Model, SerializerMixin):
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(200) )
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    budget_id = db.Column(db.Integer, db.ForeignKey('budgets.id'))
     
 
-    categories = db.relationship('Category', secondary='category_transaction_association', back_populates='transactions')
+    budget = db.relationship('Budget', back_populates = 'transactions')
     
     
 

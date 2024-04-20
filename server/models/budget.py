@@ -8,14 +8,15 @@ class Budget(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     percentage = db.Column(db.Float, nullable=False)
-    
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
-    categories = db.relationship('Category', back_populates='budget')
+    user = db.relationship('User', back_populates='budgets')
     
-    transactions = association_proxy('categories', 'transactions')
+    category = db.relationship('Category', back_populates= 'budgets')
     
-    user = association_proxy('categories', 'user')
+    transactions =  db.relationship('Transaction', back_populates='budget')
+    
 
     serialize_rules = ('-categories.budget', '-transactions.budgets', '-user._password_hash',
                        '-user.budgets', '-categories.user_id', '-categories.user.budgets', 
