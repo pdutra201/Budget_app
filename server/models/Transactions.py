@@ -18,11 +18,7 @@ class Transaction(db.Model, SerializerMixin):
     budget = db.relationship('Budget', back_populates = 'transactions')
     
     
-
-    serialize_rules = ( '-user.transactions', 
-                       '-user._password_hash', '-user.categories',
-                       '-categories.transactions', '-categories.budget',
-                       '-categories.user_id', ) 
+    serialize_rules = ( '-budget.transactions',) 
 
 def __repr__(self):
     return f'Transaction: {self.description},  {self.amount}, {self.date}'

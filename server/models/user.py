@@ -18,10 +18,8 @@ class User(db.Model, SerializerMixin):
 
     categories = association_proxy('budgets', 'category')
     
-    serialize_rules = ('-transactions.user', '-budgets.user', '-categories.user', 
-                       '-categories.budget', '-categories.transaction', '-budgets.categories', 
-                       '-transactions.categories', '-categories.budget.user', '-budgets.transactions'
-                       ,)
+    serialize_rules = ('-budgets.user', '-categories.user',
+                       '-budgets.categories', '-categories.budget.user', 'categories')
 
     @hybrid_property
     def password_hash(self):

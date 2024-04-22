@@ -4,12 +4,11 @@ import TransactionForm from "./TransactionForm";
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css'
 
-function Transactions({ user, getTransactions, trans }) {
+function Transactions({ user, getTransactions, trans, setUser }) {
     
     //set state to edit or not
     const [editId, setEditId] = useState(null);
 
-    
     //request transactions on page load and when user changes
     useEffect(() => {
         if (user) {
@@ -26,32 +25,12 @@ function Transactions({ user, getTransactions, trans }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ...values, user_id: user.id })
+            body: JSON.stringify({ ...values})
         })
             .then(resp => {
                 if (resp.ok) {
                     return resp.json()
                 }
-            })
-            .then(data => {
-                
-                const categoryRequests = values.categories.map(category => {
-                    (console.log(category))
-                    return fetch(`/api/categories/${category}`, {
-                        method: 'PATCH',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            'trans_id': data.id
-                        })
-                    })
-                    .then(resp => {
-                        if (resp.ok) {
-                            return resp.json()
-                        }
-                    });
-                });
-        
-                return Promise.all(categoryRequests);
             })
             .then(() => {getTransactions()})
     };
@@ -103,7 +82,7 @@ function Transactions({ user, getTransactions, trans }) {
         <div>
             {user ? (
                 <div className="container">
-                    <TransactionForm onSubmit={handleAddTransaction} />
+                    <TransactionForm onSubmit={handleAddTransaction} user={user} setUser={setUser}/>
                     <br/>
                     <h2 style={{fontWeight: 'bold', color:'black'}}>Transactions</h2>
                     <ul>
@@ -112,8 +91,10 @@ function Transactions({ user, getTransactions, trans }) {
                                 {editId == transaction.id ? (
                                     <div>
                                         <TransactionForm
+                                        user = {user}
                                         transaction={transaction}
                                         onSubmit={handleUpdate}
+                                        setUser={setUser}
                                         
 
                                     />
@@ -125,11 +106,7 @@ function Transactions({ user, getTransactions, trans }) {
                                         <strong>Description:</strong> {transaction.description}<br/>
                                         <strong>Price:</strong> {transaction.amount}<br/>
                                         <strong>Date:</strong> {transaction.date}<br/>
-                                        <ul>Categories:
-                                            {transaction.categories.map( cat => {
-                                                return <li style={{marginLeft:"10px"}} key={cat.id}>{cat.name}</li>
-                                            })} 
-                                        </ul>                            
+                                        <strong>Category: {transaction.budget.category.name}</strong><br/>                            
                                         <button style={{background:'orange', color:'white'}} onClick={() => handleEdit(transaction.id)}>Edit</button>
                                         <button style={{background: 'Red', color: 'white'}} onClick={() => handleDelete(transaction.id)}>Delete</button>
                                     </>

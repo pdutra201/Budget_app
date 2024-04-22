@@ -7,14 +7,14 @@ class Category(db.Model, SerializerMixin):
     __tablename__  = "categories"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String, unique = True, nullable = False)
     
 
     user = association_proxy('budgets', 'category')
     
     budgets = db.relationship('Budget', back_populates='category')
     
-    serialize_rules = ('-budget.categories', '-user.categories', '-transactions.categories', 
+    serialize_rules = ('-budgets.category', '-user.category', 
                        '-transactions.user_id', )
 
 

@@ -4,14 +4,15 @@ import BudgetForm from './BudgetForm'
 import '../App.css'
 
 
-function BudgetList({ user, trans, budgets, getBudgets }){
+function BudgetList({ user, budgets, getBudgets, getCategories, categories }){
 
     //on page load or on transaction change request budgets from db
     useEffect(() => {
         if(user) {
             getBudgets();
+            getCategories();
         }
-    }, [trans])
+    }, [])
 
     //POST request to add new budget to db when form submit button is clicked
     const onFormSubmit = (values) => {
@@ -38,7 +39,7 @@ function BudgetList({ user, trans, budgets, getBudgets }){
             {user ? (
                 <>
                     <h3>Budget List</h3>
-                    <BudgetForm onFormSubmit={onFormSubmit} getBudgets={getBudgets}/>
+                    <BudgetForm onFormSubmit={onFormSubmit} getBudgets={getBudgets} categories={categories} getCategories={getCategories}/>
                     <br/>
                     <h2 style={{fontWeight: 'bold', color:'black'}}>Budgets</h2>
                     {budgetList}

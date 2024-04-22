@@ -10,7 +10,7 @@ class Transactions(Resource):
     def get(self):
         user_id = session['user_id']
         if(user_id):
-            trans = Transaction.query.filter( Transaction.user_id == user_id ).all()
+            trans = Transaction.query.join(Budget).filter(Budget.user_id == user_id).all()
             trans_data = []
             for transaction in trans:
                 trans_data.append(transaction.to_dict())
@@ -45,7 +45,7 @@ class Transactions(Resource):
                 amount = float(data['amount']),
                 description = data['description'],
                 date = dateObj,
-                user_id = data['user_id']
+                budget_id = data['budget_id']
                 
             )
             db.session.add(newTrans)
@@ -60,26 +60,13 @@ class Transactions(Resource):
         user_id = session['user_id']
         data = request.get_json()
         
-        transaction = Transaction.query.filter(Transaction.id == trans_id, Transaction.user_id == user_id ).first()
+        transaction = Transaction.query.filter(Transaction.id == trans_id).first()
         
-        if(transaction):
+        if(transaction and user_id):
             transaction.amount = data['amount']
             transaction.description = data['description']
             transaction.date = datetime.strptime(data['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
-
-            for category_name in data['categories']:
-                
-                category = Category.query.filter(Category.name == category_name).first()
-                
-                if category:
-                    if category not in transaction.categories:
-                        transaction.categories.append(category)
-                else: 
-                    return {"error": "Category not found"}, 404
-
-            for category in transaction.categories:
-                if category.name not in data['categories']:
-                    transaction.categories.remove(category) 
+            transaction.budget_id = data['budget_id']
 
 
             db.session.commit()

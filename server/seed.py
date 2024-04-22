@@ -10,6 +10,9 @@ if __name__ == "__main__":
     Category.query.delete()
     Budget.query.delete()
 
+    bills = Category(name = 'bills')
+    entertainment = Category(name ='entertainment')
+
 
     # newuser1 = User(username="testing")
     # newuser1.password_hash = '12345'
@@ -18,12 +21,12 @@ if __name__ == "__main__":
     
 
 
-    # newTransaction =  Transaction(amount= 24.99, description = "Food", user_id = 1)
-    # newTransaction2 =  Transaction(amount= 10.99, description = "Gas", user_id = 1)
+    # newTransaction =  Transaction(amount= 24.99, description = "Food")
+    # newTransaction2 =  Transaction(amount= 10.99, description = "Gas")
 
     
 
-    # db.session.add_all([newuser1, newuser2, newTransaction, newTransaction2])
+    db.session.add_all([bills, entertainment])
     db.session.commit()
 
     

@@ -21,9 +21,9 @@ function Budget({budget, totalIncome}){
     }, [budget, totalIncome])
 
     //map the categories to appear on client page
-    const cats = budget.categories.map((cat) => {
-        return <li key={cat.id}>{cat.name}</li>
-    })
+    // const cats = budget.category.map((cat) => {
+    //     return <li key={cat.id}>{cat.name}</li>
+    // })
 
     //map transactions to appear on client page
     const transactionItems = transactions.map((transaction) => {
@@ -35,10 +35,14 @@ function Budget({budget, totalIncome}){
         setShowTransactions(!showTransactions)
     }
 
-    return (
+    
+        if(!budget || !budget.category){
+            return <div>Loading...</div>
+        }
+        return (
         <div>
-            <h5>Budget ID: {budget.id}</h5>
-            <>{cats}</>
+            <h5>Category: {budget.category.name}</h5>
+            
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px' }}>
                 <div style={{ marginRight: '10px' }}>Percentage: {budget.percentage}%</div>
                 <div>Allowance Remaining: ${allowance}</div>

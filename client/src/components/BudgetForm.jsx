@@ -4,7 +4,7 @@ import '../App.css'
 
 
 
-function BudgetForm({ onFormSubmit }){
+function BudgetForm({ onFormSubmit, categories, getCategories }){
 
     // define formik Form values
     const formik = useFormik({
@@ -16,7 +16,9 @@ function BudgetForm({ onFormSubmit }){
             onFormSubmit(values)
             formik.resetForm()
         }
-    })
+    }, [])
+
+    
 
     
     return(
@@ -36,14 +38,18 @@ function BudgetForm({ onFormSubmit }){
                         </div><br/>
                         <div className="form-group" style={{ marginRight: '10px' }}>
                                 <label>Category </label><br/>
-                                <input
-                                    type="text"
-                                    id="category"
-                                    placeholder=""
-                                    className="input-field"
-                                    value={formik.values.category}
+                                <select 
+                                    name="category"
                                     onChange={formik.handleChange}
-                                />
+                                    value={formik.values.category}
+                                >
+                                <option value="">Select a category</option>
+                                    {categories.map((category) => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </select>
                          </div><br/>
                          <button type="submit">Submit</button>
                      </div>

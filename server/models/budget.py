@@ -9,7 +9,7 @@ class Budget(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     percentage = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable = False)
 
     user = db.relationship('User', back_populates='budgets')
     
@@ -18,10 +18,9 @@ class Budget(db.Model, SerializerMixin):
     transactions =  db.relationship('Transaction', back_populates='budget')
     
 
-    serialize_rules = ('-categories.budget', '-transactions.budgets', '-user._password_hash',
-                       '-user.budgets', '-categories.user_id', '-categories.user.budgets', 
-                       '-transactions.categories.budgets', '-user.categories', 
-                       '-user.transactions',)
+    serialize_rules = ('-category.budget', '-transactions.budget', '-user._password_hash',
+                        '-user.budgets', '-category.user_id', '-category.user.budgets', 
+                        '-user.categories', '-user.transactions',)
     
 
     def __repr__(self):

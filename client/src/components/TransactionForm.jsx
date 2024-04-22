@@ -3,25 +3,23 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function TransactionForm({ onSubmit }) {
+function TransactionForm({ onSubmit, user, setUser }) {
 
-    //state to hold values of categories
-    const [cats, setCats] = useState([])
-
-    //send get request for categories when page loads and save in state
+    
+    // checks if user is logged in and updates any changes made elsewhere
     useEffect(()=>{
-        fetch('/api/categories')
+        fetch('/api/checksession')
             .then(resp => resp.json())
-            .then(data => setCats(data))
+            .then(data => setUser(data))
     }, [])
 
-    //set form values and 
+    //set formik values 
     const formik = useFormik({
         initialValues: {
             amount: "",
             description: "",
             date: new Date(),
-            categories: [],
+            budget_id: "",
         },
         onSubmit: (values) => {
             onSubmit(values);
@@ -29,14 +27,12 @@ function TransactionForm({ onSubmit }) {
         },
     });
 
+    
 
     //when input field changes save new value before sending to formik
     const handleCategoryChange = (e) => {
-        const { value, checked } = e.target;
-        const newCategories = checked
-            ? [...formik.values.categories, value]
-            : formik.values.categories.filter((cat) => cat !== value);
-        formik.setFieldValue("categories", newCategories);
+        const { value } = e.target;
+        formik.setFieldValue("budget_id", value)
     };
 
     return (
@@ -77,19 +73,19 @@ function TransactionForm({ onSubmit }) {
                 </div>
                 <br/>
                 <div style={{margin: '10px'}} >
-                    <label>Categories </label>
+                    <label> Budget Categories </label>
                     <br/>
                     <div style={{ maxHeight: '100px', overflowY: 'auto' }}>
-                    {cats.map((category) => (
-                        <div key={category.name} >
+                    {user.budgets.map((budget) => (
+                        <div key={budget.category.name} >
                             <input
-                                type="checkbox"
-                                id={category.name}
-                                value={category.name}
-                                checked={formik.values.categories.includes(category.name)}
+                                type="radio"
+                                id={budget.id}
+                                value={budget.id}
+                                checked={formik.values.budget_id == budget.id}
                                 onChange={handleCategoryChange}
                             />
-                            <label htmlFor={category.name}>{category.name}</label>
+                            <label htmlFor={budget.category.name}>{budget.category.name}</label>
                         </div>
                     ))}
                     </div>
