@@ -22,7 +22,7 @@ class Transactions(Resource):
     def delete(self, trans_id):
         user_id = session.get('user_id')
         if(user_id):
-            transaction = Transaction.query.filter(Transaction.id == trans_id, Transaction.user_id == user_id ).first()
+            transaction = Transaction.query.join(Budget).filter(Transaction.id == trans_id, Budget.user_id == user_id ).first()
             if transaction:
                 db.session.delete(transaction)
                 db.session.commit()
