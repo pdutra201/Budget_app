@@ -54,4 +54,15 @@ class Budgets(Resource):
             except ImportError:
                 return {'error': 'unable to access database'}
     
+    def delete(self, budget_id):
+        user_id = session['user_id']
+        if(user_id):
+            budget = Budget.query.filter(Budget.id == budget_id, Budget.user_id == user_id).first()
+            if(budget):
+                db.session.delete(budget)
+                db.session.commit()
+                return {"message": "budget deleted successfully"}
+
+            return {"error": "Unauthorized request"}
+    
    

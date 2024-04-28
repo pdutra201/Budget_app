@@ -1,10 +1,13 @@
 import { useFormik } from "formik";
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import DatePicker from "react-datepicker";
+import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
+import { UserContext } from "../context/UserContext";
 
-function TransactionForm({ onSubmit, user, setUser }) {
+function TransactionForm({ onSubmit }) {
 
+    const {user, setUser} = useContext(UserContext)
     
     // checks if user is logged in and updates any changes made elsewhere
     useEffect(()=>{
@@ -13,14 +16,19 @@ function TransactionForm({ onSubmit, user, setUser }) {
             .then(data => setUser(data))
     }, [])
 
+    const formSchema = Yup.object({
+        amount: Yup.number().min(1, "Amount must be greater than 0").required("Amount is required"),
+        budget_id: Yup.number().required("Category is required")
+    })
     //set formik values 
     const formik = useFormik({
         initialValues: {
-            amount: "",
+            amount: 0.0,
             description: "",
             date: new Date(),
             budget_id: "",
         },
+        validationSchema: formSchema,
         onSubmit: (values) => {
             onSubmit(values);
             formik.resetForm();
@@ -49,6 +57,7 @@ function TransactionForm({ onSubmit, user, setUser }) {
                         value={formik.values.amount}
                         onChange={formik.handleChange}
                     />
+                    {formik.touched.amount && formik.errors.amount ? (<div className="error" style={{ color: 'red', fontSize: 'small' }}>{formik.errors.amount}</div>): null}
                 </div><br/>
                 <div className="form-group" style={{ marginRight: '10px' }}>
                     <label>Description </label><br/>
@@ -89,8 +98,11 @@ function TransactionForm({ onSubmit, user, setUser }) {
                         </div>
                     ))}
                     </div>
+                    {formik.touched.budget_id && formik.errors.budget_id ? (<div className="error" style={{ color: 'red', fontSize: 'small' }}>{formik.errors.budget_id}</div>): null}
                 </div>
+                
                 <button type="submit">Submit</button>
+                
             </div>
         </form>
     );

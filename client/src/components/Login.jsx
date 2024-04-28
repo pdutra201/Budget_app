@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
-function Login( {isLoggedIn, clearError, getTransactions}){
+function Login(){
+
+const {isLoggedIn, clearError, getTransactions} = useContext(UserContext)
 
 //clear error messages 
 useEffect(() => {

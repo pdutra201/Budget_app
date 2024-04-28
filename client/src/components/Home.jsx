@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {useFormik} from "formik";
 import '../App.css'
+import { UserContext } from "../context/UserContext";
 
 
-function Home({ user, clearError, setUser, trans }) {
+function Home() {
+
+    const {user, clearError, setUser, trans} = useContext(UserContext)
 
     //state to determine if Salary is editable
     const [canEdit, setCanEdit] = useState(false)

@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import '/home/pdutra/Development/code/phase-4/budget_app/client/node_modules/startbootstrap-sb-admin-2/css/sb-admin-2.css'
+import { UserContext } from "../context/UserContext";
 
 
-function NavBar({ user, setUser}) {
+function NavBar() {
+
+    const { user, setUser} = useContext(UserContext)
 
     // send DELETE request to db to log out user
     function handleLogoutClick() {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 
 
-function Budget({budget, totalIncome}){
+function Budget({budget, totalIncome, getBudgets, }){
     
     //create state variables
     const [transactions, setTransactions] = useState([])
@@ -10,20 +10,22 @@ function Budget({budget, totalIncome}){
 
 
     //GET request for transactions associated to a budget id and calculate allowance | runs when budget or totalincome states are changed
-    useEffect (() => {
-        fetch(`/api/budget/${budget.id}/transactions`)
+    useEffect(() => {
+        if(budget){
+            fetch(`/api/budget/${budget.id}/transactions`)
             .then(resp => resp.json())
             .then(data => {
-                setTransactions(data)
-                const totalSpent = data.reduce((total, transaction) => total + transaction.amount, 0)
-                setAllowance( (budget.percentage/100)*totalIncome - totalSpent)
+                if(data){
+                    setTransactions(data)
+                    const totalSpent = data.reduce((total, transaction) => total + transaction.amount, 0)
+                    setAllowance( (budget.percentage/100)*totalIncome - totalSpent)
+                }
             })
-    }, [budget, totalIncome])
+        }
+}, [])
 
-    //map the categories to appear on client page
-    // const cats = budget.category.map((cat) => {
-    //     return <li key={cat.id}>{cat.name}</li>
-    // })
+
+   
 
     //map transactions to appear on client page
     const transactionItems = transactions.map((transaction) => {
@@ -33,6 +35,16 @@ function Budget({budget, totalIncome}){
     //toggle to determine if transactions are visible or not
     const toggleTransactions = () => {
         setShowTransactions(!showTransactions)
+    }
+
+    const handleDelete = () => {
+        fetch(`/api/budget/${budget.id}`, {
+            method: "DELETE"
+        })
+        .then(resp => resp.json())
+        .then(() => {
+            getBudgets()}
+        )
     }
 
     
@@ -56,6 +68,7 @@ function Budget({budget, totalIncome}){
                         <ul>{transactionItems}</ul>
                     </div>
                 )}
+                <button onClick={handleDelete}>Delete</button>
             </div>
             <div style={{ borderBottom: '2px solid #000', marginBottom: '20px' }}></div>
         </div >

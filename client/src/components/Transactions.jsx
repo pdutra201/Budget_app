@@ -1,11 +1,14 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import TransactionForm from "./TransactionForm";
 import "react-datepicker/dist/react-datepicker.css";
 import '../App.css'
+import { UserContext } from "../context/UserContext";
 
-function Transactions({ user, getTransactions, trans, setUser }) {
+function Transactions() {
     
+    const { user, getTransactions, trans, setUser} = useContext(UserContext)
+
     //set state to edit or not
     const [editId, setEditId] = useState(null);
 

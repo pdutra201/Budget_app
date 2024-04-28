@@ -15,7 +15,7 @@ class Budget(db.Model, SerializerMixin):
     
     category = db.relationship('Category', back_populates= 'budgets')
     
-    transactions =  db.relationship('Transaction', back_populates='budget')
+    transactions =  db.relationship('Transaction', back_populates='budget', cascade = 'all, delete-orphan')
     
 
     serialize_rules = ('-category.budget', '-transactions.budget', '-user._password_hash',

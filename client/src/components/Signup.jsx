@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 
-function SignUp({ isLoggedIn, clearError }) {
+function SignUp() {
 
+  const {isLoggedIn, clearError} = useContext(UserContext)
 // clear error message 
   useEffect(() => {
     clearError()
