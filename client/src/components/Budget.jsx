@@ -1,11 +1,14 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext} from 'react'
+import { UserContext } from '../context/UserContext'
 
 
-function Budget({budget, totalIncome, getBudgets, }){
+function Budget({budget, totalIncome }){
+
+    const { getBudgets, user} = useContext(UserContext)
     
     //create state variables
     const [transactions, setTransactions] = useState([])
-    const [allowance, setAllowance] = useState((budget.percentage/100)*totalIncome)
+    const [allowance, setAllowance] = useState((budget.percentage/100)*user.income)
     const [showTransactions, setShowTransactions] = useState(false)
 
 
@@ -18,7 +21,7 @@ function Budget({budget, totalIncome, getBudgets, }){
                 if(data){
                     setTransactions(data)
                     const totalSpent = data.reduce((total, transaction) => total + transaction.amount, 0)
-                    setAllowance( (budget.percentage/100)*totalIncome - totalSpent)
+                    setAllowance( (budget.percentage/100)*user.income - totalSpent)
                 }
             })
         }
@@ -42,8 +45,7 @@ function Budget({budget, totalIncome, getBudgets, }){
             method: "DELETE"
         })
         .then(resp => resp.json())
-        .then(() => {
-            getBudgets()}
+        .then(() => { getBudgets()}
         )
     }
 
