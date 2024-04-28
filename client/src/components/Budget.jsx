@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext} from 'react'
 import { UserContext } from '../context/UserContext'
 
 
-function Budget({budget, totalIncome }){
+function Budget({ budget }){
 
     const { getBudgets, user} = useContext(UserContext)
     

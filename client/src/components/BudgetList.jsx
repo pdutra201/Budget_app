@@ -37,7 +37,7 @@ function BudgetList(){
 
     //map through budget and send data to Budget component
     const budgetList = budgets.map((budget) => {
-        return <Budget key = {budget.id} budget={budget} />
+        return <Budget key = {budget.id} budget = { budget } />
     })
 
     return (

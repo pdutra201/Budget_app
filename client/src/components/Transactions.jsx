@@ -85,7 +85,7 @@ function Transactions() {
         <div>
             {user ? (
                 <div className="container">
-                    <TransactionForm onSubmit={handleAddTransaction} user={user} setUser={setUser}/>
+                    <TransactionForm onSubmit={handleAddTransaction} />
                     <br/>
                     <h2 style={{fontWeight: 'bold', color:'black'}}>Transactions</h2>
                     <ul>
@@ -93,12 +93,7 @@ function Transactions() {
                             <li key={transaction.id}>
                                 {editId == transaction.id ? (
                                     <div>
-                                        <TransactionForm
-                                        user = {user}
-                                        transaction={transaction}
-                                        onSubmit={handleUpdate}
-                                        setUser={setUser}
-                                        
+                                        <TransactionForm onSubmit={handleUpdate}                                    
 
                                     />
                                     <button style={{background: 'Red', color: 'white'}} onClick={handleCancelEdit}>Cancel</button>
